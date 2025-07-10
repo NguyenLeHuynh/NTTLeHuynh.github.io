@@ -3,109 +3,117 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Profile Xịn Xò - Đầy đủ chức năng</title>
+  <title>Trang Profile Hiện Đại</title>
   <link rel="stylesheet" href="style.css" />
 </head>
 <body>
-  <div id="app">
-    <header>
-      <h1>Trang Profile Của Tôi</h1>
-      <nav>
-        <button class="nav-btn active" data-section="home">Trang Chủ</button>
-        <button class="nav-btn" data-section="about">Giới Thiệu</button>
-        <button class="nav-btn" data-section="contact">Liên Hệ</button>
-        <button class="nav-btn" data-section="game">Mini Game</button>
-        <button id="toggleTheme" title="Chuyển chế độ tối/sáng">🌙</button>
-      </nav>
-      <div class="auth" id="authArea">
-        <button id="btnLoginOpen">Đăng Nhập</button>
-        <button id="btnRegisterOpen">Đăng Ký</button>
-      </div>
-    </header>
+  <nav>
+    <button class="nav-btn active" data-section="home">Trang Chủ</button>
+    <button class="nav-btn" data-section="profile">Hồ Sơ</button>
+    <button class="nav-btn" data-section="about">Giới Thiệu</button>
+    <button class="nav-btn" data-section="contact">Liên Hệ</button>
+    <button class="nav-btn" data-section="game">Mini Game</button>
+    <div class="auth" id="authArea">
+      <!-- Đăng nhập/Đăng ký hoặc Xin chào người dùng + Đăng xuất -->
+    </div>
+    <button id="toggleTheme" aria-label="Toggle theme">🌙</button>
+  </nav>
 
-    <main>
-      <!-- HOME -->
-      <section id="home" class="section active">
-        <div class="profile-pic">
-          <img id="profileImage" src="" alt="Ảnh cá nhân" />
-          <button id="editProfilePicBtn" class="edit-btn">✏️ Sửa ảnh</button>
-        </div>
-        <h2 id="userNameDisplay">[Tên của bạn]</h2>
-        <button class="edit-btn" id="editNameBtn">✏️ Sửa tên</button>
+  <main>
+    <section id="home" class="section active">
+      <h2>Chào mừng bạn đến với trang của tôi</h2>
+      <p style="text-align:center;">Đây là trang chủ của trang profile hiện đại, có đăng nhập, đăng ký, chỉnh sửa thông tin và mini game rắn săn mồi.</p>
+    </section>
+
+    <section id="profile" class="section">
+      <h2>Hồ Sơ Người Dùng</h2>
+      <div class="profile-pic" id="profilePic">
+        <img src="" alt="Ảnh đại diện" id="profileImage" />
+      </div>
+      <div style="text-align:center;">
+        <h3 id="userNameDisplay">[Tên của bạn]</h3>
+        <button class="edit-btn" id="editNameBtn">Sửa Tên</button>
+      </div>
+      <div style="text-align:center; margin-top: 20px;">
         <p id="welcomeText">Chào mừng bạn đến với trang profile xịn xò của tôi!</p>
-        <button class="edit-btn" id="editWelcomeBtn">✏️ Sửa lời chào</button>
-      </section>
-
-      <!-- ABOUT -->
-      <section id="about" class="section">
-        <h2>Giới Thiệu</h2>
-        <div id="aboutContent">Tôi là lập trình viên đam mê công nghệ, thiết kế web hiện đại.</div>
-        <button class="edit-btn" id="editAboutBtn">✏️ Sửa thông tin</button>
-      </section>
-
-      <!-- CONTACT -->
-      <section id="contact" class="section">
-        <h2>Thông Tin Liên Hệ</h2>
-        <ul id="contactList">
-          <li>Email: <span id="contactEmail">youremail@example.com</span></li>
-          <li>Số điện thoại: <span id="contactPhone">0123 456 789</span></li>
-          <li>Địa chỉ: <span id="contactAddress">Thành phố XYZ, Việt Nam</span></li>
-        </ul>
-        <button class="edit-btn" id="editContactBtn">✏️ Sửa thông tin</button>
-      </section>
-
-      <!-- MINI GAME -->
-      <section id="game" class="section">
-        <h2>Mini Game: Bắn bóng</h2>
-        <canvas id="gameCanvas" width="400" height="300" tabindex="0" aria-label="Mini game bắn bóng"></canvas>
-        <p id="score">Điểm: 0</p>
-        <button id="restartGame">Chơi lại</button>
-      </section>
-    </main>
-
-    <!-- Modal chung để sửa thông tin -->
-    <div class="modal" id="editModal" aria-hidden="true" role="dialog" aria-labelledby="editModalTitle">
-      <div class="modal-content">
-        <button class="close-modal" id="closeEditModal">&times;</button>
-        <h3 id="editModalTitle">Chỉnh sửa thông tin</h3>
-        <form id="editForm">
-          <!-- Nội dung form sẽ được JS tạo động -->
-        </form>
+        <button class="edit-btn" id="editWelcomeBtn">Sửa Lời Chào</button>
       </div>
-    </div>
-
-    <!-- Modal đăng nhập -->
-    <div class="modal" id="loginModal" aria-hidden="true" role="dialog" aria-labelledby="loginTitle">
-      <div class="modal-content">
-        <button class="close-modal" id="closeLogin">&times;</button>
-        <h3 id="loginTitle">Đăng Nhập</h3>
-        <form id="loginForm">
-          <label for="loginEmail">Email:</label>
-          <input type="email" id="loginEmail" required autocomplete="username" />
-          <label for="loginPassword">Mật khẩu:</label>
-          <input type="password" id="loginPassword" required autocomplete="current-password" />
-          <button type="submit">Đăng Nhập</button>
-          <p id="loginMsg" class="message"></p>
-        </form>
+      <div style="text-align:center; margin-top: 20px;">
+        <button class="edit-btn" id="editProfilePicBtn">Sửa Ảnh Đại Diện</button>
       </div>
-    </div>
+    </section>
 
-    <!-- Modal đăng ký -->
-    <div class="modal" id="registerModal" aria-hidden="true" role="dialog" aria-labelledby="registerTitle">
-      <div class="modal-content">
-        <button class="close-modal" id="closeRegister">&times;</button>
-        <h3 id="registerTitle">Đăng Ký</h3>
-        <form id="registerForm">
-          <label for="regEmail">Email:</label>
-          <input type="email" id="regEmail" required autocomplete="username" />
-          <label for="regPassword">Mật khẩu:</label>
-          <input type="password" id="regPassword" required minlength="6" autocomplete="new-password" />
-          <button type="submit">Đăng Ký</button>
-          <p id="registerMsg" class="message"></p>
-        </form>
+    <section id="about" class="section">
+      <h2>Giới Thiệu</h2>
+      <p id="aboutContent" style="max-width: 700px; margin: 0 auto; line-height: 1.6;">
+        Tôi là lập trình viên đam mê công nghệ, thiết kế web hiện đại.
+      </p>
+      <div style="text-align:center; margin-top: 20px;">
+        <button class="edit-btn" id="editAboutBtn">Sửa Giới Thiệu</button>
       </div>
-    </div>
+    </section>
 
+    <section id="contact" class="section">
+      <h2>Liên Hệ</h2>
+      <ul id="contactList" style="max-width: 400px; margin: 0 auto; font-size: 1.1rem;">
+        <li>Email: <span id="contactEmail">youremail@example.com</span></li>
+        <li>Số điện thoại: <span id="contactPhone">0123 456 789</span></li>
+        <li>Địa chỉ: <span id="contactAddress">Thành phố XYZ, Việt Nam</span></li>
+      </ul>
+      <div style="text-align:center; margin-top: 20px;">
+        <button class="edit-btn" id="editContactBtn">Sửa Thông Tin Liên Hệ</button>
+      </div>
+    </section>
+
+    <section id="game" class="section">
+      <h2>Mini Game Rắn Săn Mồi</h2>
+      <canvas id="gameCanvas" width="500" height="300" tabindex="0" aria-label="Mini game rắn săn mồi"></canvas>
+      <div id="score">Điểm: 0</div>
+      <p style="text-align:center; max-width: 600px; margin: 0 auto;">
+        Dùng phím mũi tên để điều khiển con rắn. Hãy cố gắng ăn thật nhiều trái để đạt điểm cao nhất nhé!
+      </p>
+    </section>
+  </main>
+
+  <!-- Modal chỉnh sửa thông tin -->
+  <div class="modal" id="editModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="editModalTitle">
+    <div class="modal-content">
+      <button class="close-modal" id="closeEditModal" aria-label="Đóng">&times;</button>
+      <h2 id="editModalTitle">Chỉnh sửa</h2>
+      <form id="editForm"></form>
+    </div>
+  </div>
+
+  <!-- Modal đăng nhập -->
+  <div class="modal" id="loginModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+    <div class="modal-content">
+      <button class="close-modal" id="closeLogin" aria-label="Đóng">&times;</button>
+      <h2 id="loginTitle">Đăng Nhập</h2>
+      <form id="loginForm">
+        <label for="loginEmail">Email</label>
+        <input type="email" id="loginEmail" required placeholder="Nhập email" />
+        <label for="loginPassword">Mật khẩu</label>
+        <input type="password" id="loginPassword" required placeholder="Nhập mật khẩu" />
+        <button type="submit">Đăng Nhập</button>
+        <div class="message" id="loginMsg"></div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal đăng ký -->
+  <div class="modal" id="registerModal" aria-hidden="true" role="dialog" aria-modal="true" aria-labelledby="registerTitle">
+    <div class="modal-content">
+      <button class="close-modal" id="closeRegister" aria-label="Đóng">&times;</button>
+      <h2 id="registerTitle">Đăng Ký</h2>
+      <form id="registerForm">
+        <label for="regEmail">Email</label>
+        <input type="email" id="regEmail" required placeholder="Nhập email" />
+        <label for="regPassword">Mật khẩu</label>
+        <input type="password" id="regPassword" required placeholder="Nhập mật khẩu" />
+        <button type="submit">Đăng Ký</button>
+        <div class="message" id="registerMsg"></div>
+      </form>
+    </div>
   </div>
 
   <script src="script.js"></script>
