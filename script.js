@@ -1,150 +1,152 @@
-// --- Biến DOM ---
-const sidebarToggleBtns = document.querySelectorAll(".sidebar-toggle");
-const sidebar = document.querySelector(".sidebar");
-const searchForm = document.querySelector(".search-form");
-const themeToggleBtn = document.querySelector(".theme-toggle");
-const themeIcon = themeToggleBtn.querySelector(".theme-icon");
-const menuLinks = document.querySelectorAll(".menu-link");
+// Chuyển section với hiệu ứng fade
+const navButtons = document.querySelectorAll('nav .nav-btn');
+const sections = document.querySelectorAll('main .section');
 
-// --- Hàm cập nhật icon theme theo trạng thái hiện tại ---
-function updateThemeIcon() {
-  const isDark = document.body.classList.contains("dark-theme");
-  // Nếu sidebar collapsed, icon hiển thị theo theme đối lập để dễ nhận biết toggle
-  if (sidebar.classList.contains("collapsed")) {
-    themeIcon.textContent = isDark ? "light_mode" : "dark_mode";
-  } else {
-    // Sidebar mở thì luôn hiển thị icon dark_mode để bật/tắt dễ hiểu
-    themeIcon.textContent = "dark_mode";
-  }
-}
+navButtons.forEach(btn => {
+  btn.addEventListener('click', () => {
+    if (btn.classList.contains('active')) return;
 
-// --- Thiết lập theme ban đầu dựa trên localStorage hoặc system preference ---
-(function initTheme() {
-  const savedTheme = localStorage.getItem("theme");
-  const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-  const useDark = savedTheme === "dark" || (!savedTheme && systemPrefersDark);
-  document.body.classList.toggle("dark-theme", useDark);
-  updateThemeIcon();
-})();
+    // Xóa active của nút trước, active section trước
+    document.querySelector('nav .nav-btn.active').classList.remove('active');
+    document.querySelector('main .section.active').classList.remove('active');
 
-// --- Chuyển đổi theme khi nhấn nút ---
-themeToggleBtn.addEventListener("click", () => {
-  const isDark = document.body.classList.toggle("dark-theme");
-  localStorage.setItem("theme", isDark ? "dark" : "light");
-  updateThemeIcon();
-});
+    btn.classList.add('active');
+    const targetId = btn.dataset.section;
+    const targetSection = document.getElementById(targetId);
 
-// --- Toggle sidebar khi nhấn nút ---
-sidebarToggleBtns.forEach(btn => {
-  btn.addEventListener("click", () => {
-    sidebar.classList.toggle("collapsed");
-
-    // Tập trung input tìm kiếm nếu sidebar vừa mở
-    if (!sidebar.classList.contains("collapsed")) {
-      const input = searchForm.querySelector("input[type='search']");
-      if (input) input.focus();
-    }
-
-    updateThemeIcon();
+    // Thêm active section mới với delay nhỏ để fade animation mượt
+    targetSection.classList.add('active');
   });
 });
 
-// --- Mở sidebar khi click vào search form nếu đang collapsed ---
-searchForm.addEventListener("click", () => {
-  if (sidebar.classList.contains("collapsed")) {
-    sidebar.classList.remove("collapsed");
-    const input = searchForm.querySelector("input[type='search']");
-    if (input) input.focus();
-    updateThemeIcon();
-  }
-});
-
-// --- Bật sidebar mặc định trên màn hình lớn ---
-function handleResize() {
-  if (window.innerWidth > 768) {
-    sidebar.classList.remove("collapsed");
+// Toggle chế độ tối/sáng
+const toggleThemeBtn = document.getElementById('toggleTheme');
+toggleThemeBtn.addEventListener('click', () => {
+  document.body.classList.toggle('dark');
+  // Đổi icon nút
+  if(document.body.classList.contains('dark')) {
+    toggleThemeBtn.textContent = '☀️';
   } else {
-    // Có thể giữ trạng thái collapsed trên mobile hoặc tùy chỉnh
-  }
-  updateThemeIcon();
-}
-
-window.addEventListener("resize", handleResize);
-handleResize(); // gọi lần đầu khi load
-
-// --- Tăng trải nghiệm người dùng ---
-// Bật/tắt active class menu link khi click (nếu muốn)
-menuLinks.forEach(link => {
-  link.addEventListener("click", e => {
-    menuLinks.forEach(l => l.classList.remove("active"));
-    e.currentTarget.classList.add("active");
-  });
-});
-const canvas = document.querySelector("canvas");
-const ctx = canvas.getContext("2d");
-
-let drawing = false;
-let currentTool = "brush";
-let brushSize = 5;
-let brushColor = "#4A98F7";
-let fillColor = false;
-
-// Thiết lập canvas full kích thước section drawing-board
-function resizeCanvas() {
-  canvas.width = canvas.clientWidth;
-  canvas.height = canvas.clientHeight;
-}
-window.addEventListener("resize", resizeCanvas);
-resizeCanvas();
-
-// Bắt đầu vẽ
-canvas.addEventListener("mousedown", e => {
-  drawing = true;
-  ctx.beginPath();
-  ctx.moveTo(e.offsetX, e.offsetY);
-});
-
-canvas.addEventListener("mousemove", e => {
-  if (!drawing) return;
-  if (currentTool === "brush") {
-    ctx.strokeStyle = brushColor;
-    ctx.lineWidth = brushSize;
-    ctx.lineCap = "round";
-    ctx.lineTo(e.offsetX, e.offsetY);
-    ctx.stroke();
-  } else if (currentTool === "eraser") {
-    ctx.clearRect(e.offsetX - brushSize / 2, e.offsetY - brushSize / 2, brushSize, brushSize);
+    toggleThemeBtn.textContent = '🌙';
   }
 });
 
-canvas.addEventListener("mouseup", () => {
-  drawing = false;
+// Modal đăng nhập, đăng ký
+const loginModal = document.getElementById('loginModal');
+const registerModal = document.getElementById('registerModal');
+const btnLoginOpen = document.getElementById('btnLoginOpen');
+const btnRegisterOpen = document.getElementById('btnRegisterOpen');
+const closeLogin = document.getElementById('closeLogin');
+const closeRegister = document.getElementById('closeRegister');
+
+btnLoginOpen.addEventListener('click', () => {
+  loginModal.classList.add('show');
+  loginModal.setAttribute('aria-hidden', 'false');
+});
+btnRegisterOpen.addEventListener('click', () => {
+  registerModal.classList.add('show');
+  registerModal.setAttribute('aria-hidden', 'false');
+});
+closeLogin.addEventListener('click', () => {
+  loginModal.classList.remove('show');
+  loginModal.setAttribute('aria-hidden', 'true');
+  clearLoginForm();
+});
+closeRegister.addEventListener('click', () => {
+  registerModal.classList.remove('show');
+  registerModal.setAttribute('aria-hidden', 'true');
+  clearRegisterForm();
 });
 
-// Lựa chọn tool
-document.getElementById("brush").addEventListener("click", () => currentTool = "brush");
-document.getElementById("eraser").addEventListener("click", () => currentTool = "eraser");
-
-// Thay đổi kích thước cọ
-document.getElementById("size-slider").addEventListener("input", e => {
-  brushSize = e.target.value;
+// Đóng modal khi click ra ngoài modal-content
+window.addEventListener('click', (e) => {
+  if (e.target === loginModal) {
+    loginModal.classList.remove('show');
+    loginModal.setAttribute('aria-hidden', 'true');
+    clearLoginForm();
+  }
+  if (e.target === registerModal) {
+    registerModal.classList.remove('show');
+    registerModal.setAttribute('aria-hidden', 'true');
+    clearRegisterForm();
+  }
 });
 
-// Chọn màu
-document.getElementById("color-picker").addEventListener("input", e => {
-  brushColor = e.target.value;
+// Fake hệ thống đăng ký/đăng nhập lưu localStorage
+const registerForm = document.getElementById('registerForm');
+const loginForm = document.getElementById('loginForm');
+const registerMsg = document.getElementById('registerMsg');
+const loginMsg = document.getElementById('loginMsg');
+
+registerForm.addEventListener('submit', e => {
+  e.preventDefault();
+  const email = document.getElementById('regEmail').value.trim();
+  const pass = document.getElementById('regPassword').value;
+
+  if(localStorage.getItem('user_' + email)) {
+    registerMsg.textContent = 'Email đã được đăng ký.';
+    registerMsg.style.color = 'red';
+  } else {
+    localStorage.setItem('user_' + email, pass);
+    registerMsg.textContent = 'Đăng ký thành công! Bạn có thể đăng nhập.';
+    registerMsg.style.color = 'green';
+    registerForm.reset();
+  }
 });
 
-// Clear canvas
-document.querySelector(".clear-canvas").addEventListener("click", () => {
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
+loginForm.addEventListener('submit', e => {
+  e.preventDefault();
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPassword').value;
+
+  const storedPass = localStorage.getItem('user_' + email);
+  if(storedPass && storedPass === pass) {
+    loginMsg.textContent = 'Đăng nhập thành công! Chào mừng bạn.';
+    loginMsg.style.color = 'green';
+
+    setTimeout(() => {
+      loginModal.classList.remove('show');
+      loginModal.setAttribute('aria-hidden', 'true');
+      loginForm.reset();
+      loginMsg.textContent = '';
+
+      // Thay đổi giao diện khi đã đăng nhập (đơn giản)
+      btnLoginOpen.style.display = 'none';
+      btnRegisterOpen.style.display = 'none';
+
+      // Hiển thị tên người dùng lên header
+      const userNameDisplay = document.createElement('span');
+      userNameDisplay.id = 'userNameDisplay';
+      userNameDisplay.textContent = `Xin chào, ${email}`;
+      userNameDisplay.style.color = 'var(--primary)';
+      document.querySelector('header .auth').appendChild(userNameDisplay);
+    }, 1200);
+
+  } else {
+    loginMsg.textContent = 'Email hoặc mật khẩu không đúng.';
+    loginMsg.style.color = 'red';
+  }
 });
 
-// Save ảnh
-document.querySelector(".save-img").addEventListener("click", () => {
-  const link = document.createElement("a");
-  link.download = "drawing.png";
-  link.href = canvas.toDataURL();
-  link.click();
-});
+function clearLoginForm() {
+  loginForm.reset();
+  loginMsg.textContent = '';
+}
+function clearRegisterForm() {
+  registerForm.reset();
+  registerMsg.textContent = '';
+}
 
+// Mini game: bắn bóng đơn giản
+const canvas = document.getElementById('gameCanvas');
+const ctx = canvas.getContext('2d');
+
+const restartBtn = document.getElementById('restartGame');
+const scoreDisplay = document.getElementById('score');
+
+let balls = [];
+let score = 0;
+let animationId;
+
+class Ball {
+  constructor()
