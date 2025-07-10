@@ -1,168 +1,91 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="vi">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Sidebar & Drawing App | CodingNepal</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Profile Xịn Xò</title>
   <link rel="stylesheet" href="style.css" />
-  <!-- Google fonts icons -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@24,400,0,0" />
 </head>
 <body>
-  <!-- Navbar -->
-  <nav class="site-nav">
-    <button class="sidebar-toggle">
-      <span class="material-symbols-rounded">menu</span>
-    </button>
-  </nav>
-
-  <div class="container">
-    <!-- Sidebar -->
-    <aside class="sidebar collapsed">
-      <div class="header-logo-container">
-        <img src="logo.png" alt="CodingNepal" class="header-logo" />
-        <span class="header-name">Nguyễn Lê</span>
-        <button class="sidebar-close">
-          <span class="material-symbols-rounded">chevron_left</span>
-        </button>
+  <div id="app" class="fade-in">
+    <header>
+      <h1>My Profile</h1>
+      <nav>
+        <button data-section="home" class="nav-btn active">Trang Chủ</button>
+        <button data-section="about" class="nav-btn">Giới Thiệu</button>
+        <button data-section="contact" class="nav-btn">Liên Hệ</button>
+        <button data-section="game" class="nav-btn">Mini Game</button>
+        <button id="toggleTheme" aria-label="Chuyển chế độ tối/sáng">🌙</button>
+      </nav>
+      <div class="auth">
+        <button id="btnLoginOpen">Đăng Nhập</button>
+        <button id="btnRegisterOpen">Đăng Ký</button>
       </div>
+    </header>
 
-      <div class="sidebar-content">
-        <form action="#" class="search-form">
-          <span class="material-symbols-rounded">search</span>
-          <input type="search" placeholder="Search..." required />
-        </form>
+    <main>
+      <section id="home" class="section active">
+        <div class="profile-pic">
+          <img src="" alt="Ảnh cá nhân" id="profileImage" />
+        </div>
+        <h2>Xin chào! Tôi là [Tên bạn]</h2>
+        <p>Chào mừng bạn đến với trang profile xịn xò của tôi.</p>
+      </section>
 
-        <ul class="menu-list">
-          <li class="menu-item">
-            <a href="#" class="menu-link active">
-              <span class="material-symbols-rounded">dashboard</span>
-              <span class="menu-label">Dashboard</span>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="#" class="menu-link">
-              <span class="material-symbols-rounded">insert_chart</span>
-              <span class="menu-label">Analytics</span>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="#" class="menu-link">
-              <span class="material-symbols-rounded">notifications</span>
-              <span class="menu-label">Notifications</span>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="#" class="menu-link">
-              <span class="material-symbols-rounded">star</span>
-              <span class="menu-label">Favourites</span>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="#" class="menu-link">
-              <span class="material-symbols-rounded">storefront</span>
-              <span class="menu-label">Products</span>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="#" class="menu-link">
-              <span class="material-symbols-rounded">group</span>
-              <span class="menu-label">Customers</span>
-            </a>
-          </li>
-          <li class="menu-item">
-            <a href="#" class="menu-link">
-              <span class="material-symbols-rounded">settings</span>
-              <span class="menu-label">Settings</span>
-            </a>
-          </li>
+      <section id="about" class="section">
+        <h2>Giới Thiệu</h2>
+        <p>Tôi là một lập trình viên đam mê công nghệ và thiết kế web hiện đại.</p>
+        <p>Thông tin thêm về bản thân có thể được cập nhật ở đây.</p>
+      </section>
+
+      <section id="contact" class="section">
+        <h2>Thông Tin Liên Hệ</h2>
+        <ul>
+          <li>Email: <a href="mailto:youremail@example.com">youremail@example.com</a></li>
+          <li>Số điện thoại: 0123 456 789</li>
+          <li>Địa chỉ: Thành phố XYZ, Việt Nam</li>
         </ul>
-      </div>
+      </section>
 
-      <div class="sidebar-footer">
-        <button class="theme-toggle">
-          <div class="theme-label">
-            <span class="theme-icon material-symbols-rounded">dark_mode</span>
-            <span class="theme-text">Dark Mode</span>
-          </div>
-          <div class="theme-toggle-track">
-            <div class="theme-toggle-indicator"></div>
-          </div>
-        </button>
-      </div>
-    </aside>
-
-    <!-- Main Content -->
-    <main class="main-content">
-      <h1 class="page-title">Dashboard Overview</h1>
-      <p class="card">Welcome to your dashboard! Use the menu to navigate, toggle the sidebar, or switch between light and dark themes.</p>
-
-      <!-- Drawing App Section -->
-      <section class="drawing-app">
-        <div class="tools-board">
-          <div class="row">
-            <label class="title">Shapes</label>
-            <ul class="options">
-              <li class="option tool" id="rectangle">
-                <img src="icons/rectangle.svg" alt="Rectangle" />
-                <span>Rectangle</span>
-              </li>
-              <li class="option tool" id="circle">
-                <img src="icons/circle.svg" alt="Circle" />
-                <span>Circle</span>
-              </li>
-              <li class="option tool" id="triangle">
-                <img src="icons/triangle.svg" alt="Triangle" />
-                <span>Triangle</span>
-              </li>
-              <li class="option">
-                <input type="checkbox" id="fill-color" />
-                <label for="fill-color">Fill color</label>
-              </li>
-            </ul>
-          </div>
-
-          <div class="row">
-            <label class="title">Options</label>
-            <ul class="options">
-              <li class="option active tool" id="brush">
-                <img src="icons/brush.svg" alt="Brush" />
-                <span>Brush</span>
-              </li>
-              <li class="option tool" id="eraser">
-                <img src="icons/eraser.svg" alt="Eraser" />
-                <span>Eraser</span>
-              </li>
-              <li class="option">
-                <input type="range" id="size-slider" min="1" max="30" value="5" />
-              </li>
-            </ul>
-          </div>
-
-          <div class="row colors">
-            <label class="title">Colors</label>
-            <ul class="options">
-              <li class="option" style="background-color:#000;"></li>
-              <li class="option selected" style="background-color:#4A98F7;"></li>
-              <li class="option" style="background-color:#ff0000;"></li>
-              <li class="option" style="background-color:#00ff00;"></li>
-              <li class="option">
-                <input type="color" id="color-picker" value="#4A98F7" />
-              </li>
-            </ul>
-          </div>
-
-          <div class="row buttons">
-            <button class="clear-canvas">Clear Canvas</button>
-            <button class="save-img">Save As Image</button>
-          </div>
-        </div>
-
-        <div class="drawing-board">
-          <canvas></canvas>
-        </div>
+      <section id="game" class="section">
+        <h2>Mini Game: Bắn bóng</h2>
+        <canvas id="gameCanvas" width="400" height="300"></canvas>
+        <p id="score">Điểm: 0</p>
+        <button id="restartGame">Chơi lại</button>
       </section>
     </main>
+
+    <!-- Modal đăng nhập -->
+    <div class="modal" id="loginModal" aria-hidden="true" role="dialog" aria-labelledby="loginTitle">
+      <div class="modal-content">
+        <button class="close-modal" id="closeLogin">&times;</button>
+        <h3 id="loginTitle">Đăng Nhập</h3>
+        <form id="loginForm">
+          <label for="loginEmail">Email:</label>
+          <input type="email" id="loginEmail" required />
+          <label for="loginPassword">Mật khẩu:</label>
+          <input type="password" id="loginPassword" required />
+          <button type="submit">Đăng Nhập</button>
+          <p id="loginMsg" class="message"></p>
+        </form>
+      </div>
+    </div>
+
+    <!-- Modal đăng ký -->
+    <div class="modal" id="registerModal" aria-hidden="true" role="dialog" aria-labelledby="registerTitle">
+      <div class="modal-content">
+        <button class="close-modal" id="closeRegister">&times;</button>
+        <h3 id="registerTitle">Đăng Ký</h3>
+        <form id="registerForm">
+          <label for="regEmail">Email:</label>
+          <input type="email" id="regEmail" required />
+          <label for="regPassword">Mật khẩu:</label>
+          <input type="password" id="regPassword" required minlength="6" />
+          <button type="submit">Đăng Ký</button>
+          <p id="registerMsg" class="message"></p>
+        </form>
+      </div>
+    </div>
   </div>
 
   <script src="script.js"></script>
