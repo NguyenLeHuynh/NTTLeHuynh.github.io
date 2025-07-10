@@ -80,3 +80,71 @@ menuLinks.forEach(link => {
     e.currentTarget.classList.add("active");
   });
 });
+const canvas = document.querySelector("canvas");
+const ctx = canvas.getContext("2d");
+
+let drawing = false;
+let currentTool = "brush";
+let brushSize = 5;
+let brushColor = "#4A98F7";
+let fillColor = false;
+
+// Thiết lập canvas full kích thước section drawing-board
+function resizeCanvas() {
+  canvas.width = canvas.clientWidth;
+  canvas.height = canvas.clientHeight;
+}
+window.addEventListener("resize", resizeCanvas);
+resizeCanvas();
+
+// Bắt đầu vẽ
+canvas.addEventListener("mousedown", e => {
+  drawing = true;
+  ctx.beginPath();
+  ctx.moveTo(e.offsetX, e.offsetY);
+});
+
+canvas.addEventListener("mousemove", e => {
+  if (!drawing) return;
+  if (currentTool === "brush") {
+    ctx.strokeStyle = brushColor;
+    ctx.lineWidth = brushSize;
+    ctx.lineCap = "round";
+    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.stroke();
+  } else if (currentTool === "eraser") {
+    ctx.clearRect(e.offsetX - brushSize / 2, e.offsetY - brushSize / 2, brushSize, brushSize);
+  }
+});
+
+canvas.addEventListener("mouseup", () => {
+  drawing = false;
+});
+
+// Lựa chọn tool
+document.getElementById("brush").addEventListener("click", () => currentTool = "brush");
+document.getElementById("eraser").addEventListener("click", () => currentTool = "eraser");
+
+// Thay đổi kích thước cọ
+document.getElementById("size-slider").addEventListener("input", e => {
+  brushSize = e.target.value;
+});
+
+// Chọn màu
+document.getElementById("color-picker").addEventListener("input", e => {
+  brushColor = e.target.value;
+});
+
+// Clear canvas
+document.querySelector(".clear-canvas").addEventListener("click", () => {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+});
+
+// Save ảnh
+document.querySelector(".save-img").addEventListener("click", () => {
+  const link = document.createElement("a");
+  link.download = "drawing.png";
+  link.href = canvas.toDataURL();
+  link.click();
+});
+
